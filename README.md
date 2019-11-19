@@ -6,10 +6,10 @@ I'm writing this because I always forget the little gotchas for creating and dep
 
 1. Create new GCP project
 1. Create a service account specifically for deploying from CI
-  1. Give it the following roles
-    * App Engine Admin
-    * Cloud Build Editor
-    * Storage Admin
+  1. Give it the following roles:
+      * App Engine Admin
+      * Cloud Build Editor
+      * Storage Admin
   1. Download service account key as JSON
 1. base64 encode JSON key: `cat service-account-creds.json | base64 --wrap=0 && echo ""`
 1. [Enable AppEngine API](https://console.developers.google.com/apis/api/appengine.googleapis.com/overview)
