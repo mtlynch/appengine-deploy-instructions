@@ -22,10 +22,10 @@ This is just a collection of notes for setting up different projects on Google C
 1. Go to [Firebase console](https://console.firebase.google.com/).
 1. Click "Add Project" and create the project.
 1. Copy `.firebaserc` and `firebase.json` from an existing project (e.g., [zestful-frontend](https://github.com/mtlynch/zestful-frontend)).
-  1. Customize the project ID in `.firebaserc`.
-  1. Customize any rules in `firebase.json`.
+    1. Customize the project ID in `.firebaserc`.
+    1. Customize any rules in `firebase.json`.
 1. Generate a firebase deploy token: `firebase login:ci`
 1. Save the deploy token as a Circle CI environment variable: `FIREBASE_DEPLOY_TOKEN`
 1. Copy deployment config from hello-world-vue-static:
-  1. [Persist the necessary files](https://github.com/mtlynch/hello-world-vue-static/blob/5d13fcf35a53328c9078a867dbce9a96cc927598/.circleci/config.yml#L14-L19) to the workspace.
-  1. [Deploy them to firebase](https://github.com/mtlynch/hello-world-vue-static/blob/5d13fcf35a53328c9078a867dbce9a96cc927598/.circleci/config.yml#L20-L32).
+    1. [Persist the necessary files](https://github.com/mtlynch/hello-world-vue-static/blob/5d13fcf35a53328c9078a867dbce9a96cc927598/.circleci/config.yml#L14-L19) to the workspace.
+    1. [Deploy them to firebase](https://github.com/mtlynch/hello-world-vue-static/blob/5d13fcf35a53328c9078a867dbce9a96cc927598/.circleci/config.yml#L20-L32).
