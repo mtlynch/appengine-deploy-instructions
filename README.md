@@ -1,6 +1,6 @@
-# appengine-deploy-instructions
+# project-setup-instructions
 
-I'm writing this because I always forget the little gotchas for creating and deploying a new AppEngine app.
+This is just a collection of notes for setting up different projects on Google Cloud Project. They're mostly just for myself, but anyone reading this is welcome to use them as well.
 
 ## Setting up a new Go App Engine Standard project
 
