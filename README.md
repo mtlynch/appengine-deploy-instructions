@@ -17,11 +17,11 @@ This is just a collection of notes for setting up different projects on Google C
 1. Copy deployment config from [What Got Done](https://github.com/mtlynch/whatgotdone/blob/2fee6628d1057c47b27ce521fc7256ef29854358/.circleci/config.yml#L84-L114).
 1. Change `GCLOUD_PROJECT` to the gcloud project ID for your project (not the project _name_).
 1. From a dev machine, create the App Engine app for the project:
-1. `GCLOUD_PROJECT="gcp-project-name"`
-1. `gcloud auth login`
-1. `gcloud config set project $GCLOUD_PROJECT`
-1. `gcloud app create`
-1. `gcloud --quiet app deploy --promote`
+   1. `GCLOUD_PROJECT="gcp-project-name"`
+   1. `gcloud auth login`
+   1. `gcloud config set project $GCLOUD_PROJECT`
+   1. `gcloud app create`
+   1. `gcloud --quiet app deploy --promote`
 
 ## Setting up a new Firebase hosting project
 
