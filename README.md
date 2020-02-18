@@ -35,3 +35,4 @@ This is just a collection of notes for setting up different projects on Google C
 1. Copy deployment config from [hello-world-vue-static](https://github.com/mtlynch/hello-world-vue-static):
    1. [Persist the necessary files](https://github.com/mtlynch/hello-world-vue-static/blob/5d13fcf35a53328c9078a867dbce9a96cc927598/.circleci/config.yml#L14-L19) to the workspace.
    1. [Deploy them to firebase](https://github.com/mtlynch/hello-world-vue-static/blob/5d13fcf35a53328c9078a867dbce9a96cc927598/.circleci/config.yml#L20-L32).
+1. (Optional): Configure a custom domain at Firebase > Hosting > Add custom domain.
