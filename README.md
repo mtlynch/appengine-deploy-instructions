@@ -11,6 +11,7 @@ This is just a collection of notes for setting up different projects on Google C
    - Cloud Build Editor
    - Storage Admin
    - Cloud Scheduler Admin (if it needs to deploy a `cron.yaml` file)
+1. Add policy binding with: `gcloud iam service-accounts add-iam-policy-binding ${PROJECT_ID}@appspot.gserviceaccount.com --member=serviceAccount:${SERVICE_ACCOUNT_NAME}@mtlynch-blog.iam.gserviceaccount.com --role=roles/iam.serviceAccountUser --project=${PROJECT_ID}`
 1. Download service account key as JSON.
 1. base64 encode JSON key: `cat service-account-creds.json | base64 --wrap=0 && echo ""`
 1. Save the base64 encoded string as a CircleCI environment variable `CLIENT_SECRET`
