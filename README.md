@@ -4,26 +4,49 @@ This is just a collection of notes for setting up different projects on Google C
 
 ## Setting up a new Go App Engine Standard project
 
-1. Create new GCP project.
-1. [Create a service account](https://console.cloud.google.com/iam-admin/serviceaccounts/create) specifically for deploying from CI:
-1. Give it the following roles:
-   - App Engine Admin
-   - Cloud Build Editor
-   - Storage Admin
-   - Cloud Scheduler Admin (if it needs to deploy a `cron.yaml` file)
-1. Add policy binding with: `gcloud iam service-accounts add-iam-policy-binding ${PROJECT_ID}@appspot.gserviceaccount.com --member=serviceAccount:${SERVICE_ACCOUNT_NAME}@mtlynch-blog.iam.gserviceaccount.com --role=roles/iam.serviceAccountUser --project=${PROJECT_ID}`
-1. Download service account key as JSON.
-1. base64 encode JSON key: `cat service-account-creds.json | base64 --wrap=0 && echo ""`
-1. Save the base64 encoded string as a CircleCI environment variable `CLIENT_SECRET`
-1. Copy deployment config from [What Got Done](https://github.com/mtlynch/whatgotdone/blob/2fee6628d1057c47b27ce521fc7256ef29854358/.circleci/config.yml#L84-L114).
+```bash
+PROJECT_ID="TODO"
+SERVICE_ACCOUNT_NAME="ci-deployer"
+SERVICE_ACCOUNT_EMAIL="${SERVICE_ACCOUNT_NAME}@${PROJECT_ID}.iam.gserviceaccount.com"
+BILLING_ACCOUNT="TODO"
+REGION=us-east1
+
+gcloud projects create "${PROJECT_ID}"
+gcloud config set project "${PROJECT_ID}"
+gcloud alpha billing projects link \
+    "${PROJECT_ID}" \
+    --billing-account "${BILLING_ACCOUNT}"
+gcloud services enable appengine.googleapis.com cloudbuild.googleapis.com
+gcloud app create --region="${REGION}"
+gcloud iam service-accounts create "${SERVICE_ACCOUNT_NAME}"
+
+ROLES=('appengine.appAdmin' 'storage.admin' 'cloudbuild.builds.editor' 'iam.serviceAccountUser')
+# If we need cron.yaml
+ROLES+=('cloudscheduler.admin')
+for ROLE in "${ROLES[@]}"
+do
+  gcloud projects add-iam-policy-binding \
+      "${PROJECT_ID}" \
+      --member="serviceAccount:${SERVICE_ACCOUNT_EMAIL}" \
+      --role="roles/${ROLE}"
+done
+
+mkdir .circleci
+pushd .circleci
+wget https://raw.githubusercontent.com/mtlynch/whatgotdone/master/.circleci/config.yml
+popd
+
+CLIENT_SECRET=$(mktemp)
+
+gcloud iam service-accounts keys create "${CLIENT_SECRET}" \
+    --iam-account="${SERVICE_ACCOUNT_EMAIL}" \
+    --key-file-type=json
+
+cat "${CLIENT_SECRET}" | base64 --wrap=0 && echo ""
+```
+
+1. Set the billing account ID.
 1. Change `GCLOUD_PROJECT` to the gcloud project ID for your project (not the project _name_).
-1. From a dev machine, create the App Engine app for the project:
-   1. `GCLOUD_PROJECT="gcp-project-name"`
-   1. `gcloud auth login`
-   1. `gcloud config set project $GCLOUD_PROJECT`
-   1. `gcloud services enable appengine.googleapis.com cloudbuild.googleapis.com`
-   1. `gcloud app create`
-   1. `gcloud --quiet app deploy --promote`
 
 ## Setting up a new Firebase hosting project
 
