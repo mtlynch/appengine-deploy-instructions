@@ -48,6 +48,14 @@ cat "${CLIENT_SECRET}" | base64 --wrap=0 && echo ""
 1. Set the billing account ID.
 1. Change `GCLOUD_PROJECT` to the gcloud project ID for your project (not the project _name_).
 
+## Setting up a new Cloud Functions project
+
+Same as above, but the roles line is:
+
+```bash
+ROLES=('appengine.appAdmin' 'cloudbuild.builds.builder' 'cloudbuild.builds.editor' 'cloudfunctions.admin' 'iam.serviceAccountUser' 'run.invoker' 'storage.admin' 'storage.objectAdmin')
+```
+
 ## Setting up a new Firebase hosting project
 
 1. Go to [Firebase console](https://console.firebase.google.com/).
