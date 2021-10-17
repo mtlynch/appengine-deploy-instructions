@@ -6,9 +6,8 @@ This is just a collection of notes for setting up different projects on Google C
 
 ```bash
 PROJECT_ID="TODO"
-SERVICE_ACCOUNT_NAME="ci-deployer"
-SERVICE_ACCOUNT_EMAIL="${SERVICE_ACCOUNT_NAME}@${PROJECT_ID}.iam.gserviceaccount.com"
 BILLING_ACCOUNT="TODO"
+SERVICE_ACCOUNT_NAME="ci-deployer"
 REGION=us-east1
 
 gcloud projects create "${PROJECT_ID}"
@@ -18,6 +17,7 @@ gcloud alpha billing projects link \
     --billing-account "${BILLING_ACCOUNT}"
 gcloud services enable appengine.googleapis.com cloudbuild.googleapis.com
 gcloud app create --region="${REGION}"
+SERVICE_ACCOUNT_EMAIL="${SERVICE_ACCOUNT_NAME}@${PROJECT_ID}.iam.gserviceaccount.com"
 gcloud iam service-accounts create "${SERVICE_ACCOUNT_NAME}"
 
 ROLES=('appengine.appAdmin' 'storage.admin' 'cloudbuild.builds.editor' 'iam.serviceAccountUser')
@@ -50,7 +50,13 @@ cat "${CLIENT_SECRET}" | base64 --wrap=0 && echo ""
 
 ## Setting up a new Cloud Functions project
 
-Same as above, but the roles line is:
+Same as above, but the services line is:
+
+```bash
+gcloud services enable cloudbuild.googleapis.com cloudfunctions.googleapis.com
+```
+
+And the roles line is:
 
 ```bash
 ROLES=('appengine.appAdmin' 'cloudbuild.builds.builder' 'cloudbuild.builds.editor' 'cloudfunctions.admin' 'iam.serviceAccountUser' 'run.invoker' 'storage.admin' 'storage.objectAdmin')
